@@ -1,0 +1,12 @@
+services:
+  gateway:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Uncomment to use a real OpenAI-compatible backend:
+      # - OPENAI_API_KEY=<your-key-here>
+    volumes:
+      # Persist the audit log on the host.
+      - ./audit.log.jsonl:/app/audit.log.jsonl
+    restart: unless-stopped
