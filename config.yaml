@@ -1,0 +1,35 @@
+# llm-guardrail-gateway — example configuration.
+# Copy to config.yaml and edit. Demo API keys only — replace in production
+# and load real keys from a secret store, never commit them.
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+
+# Backend: "mock" (offline, deterministic — the default) or "openai"
+# (any OpenAI-compatible /chat/completions endpoint; needs OPENAI_API_KEY).
+backend:
+  name: "mock"
+  model: "mock-llm"
+  base_url: "https://api.openai.com/v1"
+  timeout_seconds: 30.0
+
+policies:
+  pii_redaction: true
+  pii_block_response: false
+  injection_detection: true
+  jailbreak_detection: true
+  toxicity_filter: true
+  max_prompt_tokens: 4000
+  injection_block_threshold: 2
+
+rate_limit:
+  requests_per_minute: 60
+  tokens_per_minute: 20000
+
+# api_key -> owner label
+api_keys:
+  demo-key-123: "demo-user"
+  test-key-abc: "test-user"
+
+audit_log_path: "audit.log.jsonl"
